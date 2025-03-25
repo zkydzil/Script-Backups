@@ -1,0 +1,59 @@
+-- 🎖️ Credits to: xv_shadyxv
+print("Credits to: xv_shadyxv")
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Marco8642/science/refs/heads/ok/dead%20rails"))()
+task.wait(1)
+
+local p, c = game.Players.LocalPlayer, p.Character or p.CharacterAdded:Wait()
+local r, h, g = c:FindFirstChild("HumanoidRootPart"), c:FindFirstChild("Humanoid"), c:FindFirstChild("Revolver") or p.Backpack:FindFirstChild("Revolver")
+
+game:GetService("RunService").Stepped:Connect(function()
+    for _, v in pairs(c:GetDescendants()) do if v:IsA("BasePart") then v.CanCollide = false end end
+end)
+
+local function shoot(b) if g and b:FindFirstChild("HumanoidRootPart") then 
+    local e = g:FindFirstChild("FireEvent") or game.ReplicatedStorage:FindFirstChild("FireEvent")
+    if e then e:FireServer(b.HumanoidRootPart.Position + Vector3.new(0, 1.5, 0)) end 
+end end
+
+-- 🟦 UI: Made by xv_shadyxv
+local screenGui = Instance.new("ScreenGui", game.Players.LocalPlayer:WaitForChild("PlayerGui"))
+local creditLabel = Instance.new("TextLabel", screenGui)
+
+creditLabel.Size = UDim2.new(0, 200, 0, 30)
+creditLabel.Position = UDim2.new(0.5, -100, 0, 10) -- Centered at the top
+creditLabel.BackgroundTransparency = 1
+creditLabel.Text = "Made by xv_shadyxv"
+creditLabel.TextColor3 = Color3.fromRGB(255, 85, 85)
+creditLabel.Font = Enum.Font.GothamBold
+creditLabel.TextSize = 16
+
+-- 🟦 Hidden Blue Button GUI
+local btn = Instance.new("TextButton", screenGui)
+
+btn.Size, btn.Position = UDim2.new(0, 200, 0, 50), UDim2.new(0.5, -100, 0.1, 0)
+btn.BackgroundColor3, btn.TextColor3 = Color3.fromRGB(0, 122, 255), Color3.new(1, 1, 1)
+btn.Text, btn.Font, btn.TextSize, btn.Visible = "Start Auto Bond Farm", Enum.Font.SourceSansBold, 20, false
+
+btn.MouseButton1Click:Connect(function()
+    btn.Visible = false -- Hide after clicking
+    while task.wait(1) do
+        for _, b in ipairs(workspace:GetChildren()) do if b:IsA("Model") and b:FindFirstChild("Humanoid") and b ~= c then shoot(b) end end
+        task.wait(1)
+
+        local bonds, total = 0, 0
+        for _, bond in ipairs(workspace:GetChildren()) do 
+            if bond:IsA("Part") and bond.Name == "Bond" and bond.Parent and bond.Parent:IsA("Model") and bond.Parent.Name == "BanditHouse" then
+                total, r.CFrame, bonds = total + 1, bond.CFrame + Vector3.new(0, 5, 0), bonds + 1
+                task.wait(0.2)
+            end 
+        end
+
+        if bonds > 0 and bonds == total and h then task.wait(1) h.Health = 0 end
+    end
+end)
+
+-- 🏁 Show Button by Pressing "P"
+game:GetService("UserInputService").InputBegan:Connect(function(input, processed)
+    if not processed and input.KeyCode == Enum.KeyCode.P then btn.Visible = not btn.Visible end
+end)
