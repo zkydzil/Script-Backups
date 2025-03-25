@@ -21,7 +21,7 @@ local screenGui = Instance.new("ScreenGui", game.Players.LocalPlayer:WaitForChil
 local creditLabel = Instance.new("TextLabel", screenGui)
 
 creditLabel.Size = UDim2.new(0, 200, 0, 30)
-creditLabel.Position = UDim2.new(0.5, -100, 0, 10) -- Centered at the top
+creditLabel.Position = UDim2.new(1, -210, 0, 10) -- Moved to top-right
 creditLabel.BackgroundTransparency = 1
 creditLabel.Text = "Made by xv_shadyxv"
 creditLabel.TextColor3 = Color3.fromRGB(255, 85, 85)
@@ -31,7 +31,7 @@ creditLabel.TextSize = 16
 -- 🟦 Hidden Blue Button GUI
 local btn = Instance.new("TextButton", screenGui)
 
-btn.Size, btn.Position = UDim2.new(0, 200, 0, 50), UDim2.new(0.5, -100, 0.1, 0)
+btn.Size, btn.Position = UDim2.new(0, 200, 0, 50), UDim2.new(1, -210, 0.1, 0) -- Moved to top-right
 btn.BackgroundColor3, btn.TextColor3 = Color3.fromRGB(0, 122, 255), Color3.new(1, 1, 1)
 btn.Text, btn.Font, btn.TextSize, btn.Visible = "Start Auto Bond Farm", Enum.Font.SourceSansBold, 20, false
 
