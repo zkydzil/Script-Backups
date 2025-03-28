@@ -1,0 +1,118 @@
+local player = game.Players.LocalPlayer
+local RunService = game:GetService("RunService")
+
+-- Whitelist (Only these users can access the GUI)
+local whitelist = {
+    [7259192043] = true,  -- Alif Sigma (Owner)
+    [2987997838] = true   -- Luvzyaa Testes (Tester)
+}
+
+-- Function to send notifications
+local function sendNotification(title, text, duration)
+    pcall(function()
+        game.StarterGui:SetCore("SendNotification", {
+            Title = title,
+            Text = text,
+            Duration = duration or 5
+        })
+    end)
+end
+
+-- Whitelist Check: If not whitelisted, show a notification and stop loading
+if not whitelist[player.UserId] then
+    sendNotification("KOCAQ AKRAM", "jangan kasih orang pliss", 5)
+    return -- Stops the script here for non-whitelisted players
+end
+
+-- Load Tora Library
+local success, library = pcall(function()
+    return loadstring(game:HttpGet("https://raw.githubusercontent.com/liebertsx/Tora-Library/main/src/librarynew", true))()
+end)
+
+if not success or not library then
+    sendNotification("Error", "Failed to load Tora Library", 5)
+    return
+end
+
+-- Create GUI
+local window = library:CreateWindow("DEAD RAILS")
+
+window:AddButton({
+    text = "Bypass To End",
+    callback = function()
+        sendNotification("Spam Button If Not Teleported", "Keep clicking if teleport fails", 4)
+        wait(1)
+        player.Character:PivotTo(CFrame.new(-346, -69, -49060))
+    end
+})
+
+-- NoClip functionality
+local noclipEnabled = false
+local function toggleNoclip()
+    noclipEnabled = not noclipEnabled
+    for _, part in ipairs(player.Character:GetDescendants()) do
+        if part:IsA("BasePart") then
+            part.CanCollide = not noclipEnabled
+        end
+    end
+    sendNotification("NoClip Status", "NoClip is now " .. (noclipEnabled and "Enabled" or "Disabled"), 4)
+end
+
+RunService.Stepped:Connect(function()
+    if noclipEnabled and player.Character then
+        for _, part in ipairs(player.Character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                part.CanCollide = false
+            end
+        end
+    end
+end)
+
+window:AddButton({
+    text = "Toggle NoClip",
+    callback = function()
+        toggleNoclip()
+    end
+})
+
+window:AddLabel({ text = "Developer: Vaxy", type = "label" })
+window:AddLabel({ text = "Tester: Luvzyaa", type = "label" })
+library:Init()
+
+-- Timer UI
+local function createTimerUI()
+    local screenGui = Instance.new("ScreenGui", player.PlayerGui)
+
+    local timerFrame = Instance.new("Frame", screenGui)
+    timerFrame.Size = UDim2.new(0, 220, 0, 60)
+    timerFrame.Position = UDim2.new(0.5, -110, 0, 10)
+    timerFrame.AnchorPoint = Vector2.new(0.5, 0)
+    timerFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    timerFrame.BorderSizePixel = 2
+    timerFrame.BorderColor3 = Color3.fromRGB(255, 85, 85)
+
+    local timerLabel = Instance.new("TextLabel", timerFrame)
+    timerLabel.Size = UDim2.new(1, 0, 1, 0)
+    timerLabel.Text = "10:00"
+    timerLabel.TextColor3 = Color3.fromRGB(255, 85, 85)
+    timerLabel.Font = Enum.Font.GothamBlack
+    timerLabel.TextSize = 32
+    timerLabel.BackgroundTransparency = 1
+
+    return timerLabel
+end
+
+local timerLabel = createTimerUI()
+
+local function startTimer(duration)
+    local endTime = tick() + duration
+    while tick() < endTime do
+        local remaining = math.max(0, endTime - tick())
+        timerLabel.Text = string.format("%02d:%02d", math.floor(remaining / 60), math.floor(remaining % 60))
+        wait(0.1)
+    end
+    timerLabel.Text = "00:00"
+end
+
+startTimer(600)
+
