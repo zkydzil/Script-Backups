@@ -1,0 +1,180 @@
+local player = game.Players.LocalPlayer
+
+-- Whitelist (Only these users can access the GUI)
+local whitelist = {
+    [7259192043] = true,  -- Alif Sigma (Owner)
+    [2987997838] = true   -- Luvzyaa Testes (Tester)
+}
+
+-- Function to send notifications
+local function sendNotification(title, text, duration)
+    pcall(function()
+        game.StarterGui:SetCore("SendNotification", {
+            Title = title,
+            Text = text,
+            Duration = duration or 5
+        })
+    end)
+end
+
+-- Whitelist Check: If not whitelisted, show a notification and stop loading
+if not whitelist[player.UserId] then
+    sendNotification("Access Denied", "You are not whitelisted.", 5)
+    return -- Stops the script from continuing
+end
+
+-- GUI Creation (Only runs if the user is whitelisted)
+local main = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local up = Instance.new("TextButton")
+local down = Instance.new("TextButton")
+local onof = Instance.new("TextButton")
+local TextLabel = Instance.new("TextLabel")
+local plus = Instance.new("TextButton")
+local speed = Instance.new("TextLabel")
+local mine = Instance.new("TextButton")
+local closebutton = Instance.new("TextButton")
+local mini = Instance.new("TextButton")
+local mini2 = Instance.new("TextButton")
+
+main.Name = "main"
+main.Parent = player:WaitForChild("PlayerGui")
+main.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+main.ResetOnSpawn = false
+
+Frame.Parent = main
+Frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25) -- Dark background
+Frame.BorderColor3 = Color3.fromRGB(50, 50, 50)
+Frame.Position = UDim2.new(0.1, 0, 0.38, 0)
+Frame.Size = UDim2.new(0, 190, 0, 57)
+
+up.Name = "up"
+up.Parent = Frame
+up.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+up.Size = UDim2.new(0, 44, 0, 28)
+up.Font = Enum.Font.SourceSans
+up.Text = "UP"
+up.TextColor3 = Color3.fromRGB(255, 255, 255)
+up.TextSize = 14
+
+down.Name = "down"
+down.Parent = Frame
+down.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+down.Position = UDim2.new(0, 0, 0.49, 0)
+down.Size = UDim2.new(0, 44, 0, 28)
+down.Font = Enum.Font.SourceSans
+down.Text = "DOWN"
+down.TextColor3 = Color3.fromRGB(255, 255, 255)
+down.TextSize = 14
+
+onof.Name = "onof"
+onof.Parent = Frame
+onof.BackgroundColor3 = Color3.fromRGB(80, 0, 0) -- Dark red for toggle button
+onof.Position = UDim2.new(0.7, 0, 0.49, 0)
+onof.Size = UDim2.new(0, 56, 0, 28)
+onof.Font = Enum.Font.SourceSans
+onof.Text = "Fly"
+onof.TextColor3 = Color3.fromRGB(255, 255, 255)
+onof.TextSize = 14
+
+TextLabel.Parent = Frame
+TextLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.Position = UDim2.new(0.47, 0, 0, 0)
+TextLabel.Size = UDim2.new(0, 100, 0, 28)
+TextLabel.Font = Enum.Font.SourceSans
+TextLabel.Text = "FLY GUI V3"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14
+TextLabel.TextWrapped = true
+
+plus.Name = "plus"
+plus.Parent = Frame
+plus.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+plus.Position = UDim2.new(0.23, 0, 0, 0)
+plus.Size = UDim2.new(0, 45, 0, 28)
+plus.Font = Enum.Font.SourceSans
+plus.Text = "+"
+plus.TextColor3 = Color3.fromRGB(255, 255, 255)
+plus.TextScaled = true
+plus.TextSize = 14
+plus.TextWrapped = true
+
+speed.Name = "speed"
+speed.Parent = Frame
+speed.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+speed.Position = UDim2.new(0.47, 0, 0.49, 0)
+speed.Size = UDim2.new(0, 44, 0, 28)
+speed.Font = Enum.Font.SourceSans
+speed.Text = "1"
+speed.TextColor3 = Color3.fromRGB(255, 255, 255)
+speed.TextScaled = true
+speed.TextSize = 14
+speed.TextWrapped = true
+
+mine.Name = "mine"
+mine.Parent = Frame
+mine.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+mine.Position = UDim2.new(0.23, 0, 0.49, 0)
+mine.Size = UDim2.new(0, 45, 0, 29)
+mine.Font = Enum.Font.SourceSans
+mine.Text = "-"
+mine.TextColor3 = Color3.fromRGB(255, 255, 255)
+mine.TextScaled = true
+mine.TextSize = 14
+mine.TextWrapped = true
+
+-- Black-themed Notification (Still Credits "Vaxy")
+sendNotification("FLY GUI V3", "BY Vaxy", 5)
+
+Frame.Active = true -- GUI Can Be Moved
+Frame.Draggable = true
+
+-- Close Button
+closebutton.Name = "Close"
+closebutton.Parent = Frame
+closebutton.BackgroundColor3 = Color3.fromRGB(150, 0, 0)
+closebutton.Font = Enum.Font.SourceSans
+closebutton.Size = UDim2.new(0, 45, 0, 28)
+closebutton.Text = "X"
+closebutton.TextColor3 = Color3.fromRGB(255, 255, 255)
+closebutton.TextSize = 30
+closebutton.Position = UDim2.new(0, 0, -1, 27)
+
+closebutton.MouseButton1Click:Connect(function()
+    main:Destroy()
+end)
+
+-- Minimize Button
+mini.Name = "minimize"
+mini.Parent = Frame
+mini.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+mini.Font = Enum.Font.SourceSans
+mini.Size = UDim2.new(0, 45, 0, 28)
+mini.Text = "-"
+mini.TextColor3 = Color3.fromRGB(255, 255, 255)
+mini.TextSize = 40
+mini.Position = UDim2.new(0, 44, -1, 27)
+
+mini.MouseButton1Click:Connect(function()
+    Frame.Visible = false
+    mini.Visible = false
+    mini2.Visible = true
+end)
+
+mini2.Name = "minimize2"
+mini2.Parent = Frame
+mini2.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+mini2.Font = Enum.Font.SourceSans
+mini2.Size = UDim2.new(0, 45, 0, 28)
+mini2.Text = "+"
+mini2.TextColor3 = Color3.fromRGB(255, 255, 255)
+mini2.TextSize = 40
+mini2.Position = UDim2.new(0, 44, -1, 57)
+mini2.Visible = false
+
+mini2.MouseButton1Click:Connect(function()
+    Frame.Visible = true
+    mini.Visible = true
+    mini2.Visible = false
+end)
